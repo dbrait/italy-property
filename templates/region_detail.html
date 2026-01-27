@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Region Guide - Italy Property Tools</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="region-header" id="region-header">
+            <a href="/regions" class="back-link">&larr; Back to Dashboard</a>
+            <h1 id="region-name">Loading...</h1>
+            <p class="subtitle" id="region-subtitle"></p>
+        </header>
+
+        <nav class="tool-nav">
+            <a href="/">Cost Calculator</a>
+            <a href="/translate">Listing Translator</a>
+            <a href="/regions" class="active">Regions</a>
+        </nav>
+
+        <main id="region-content">
+            <div class="loading" id="loading-indicator">Loading region data...</div>
+
+            <!-- Content populated by JavaScript -->
+            <div id="region-details" style="display: none;">
+                <!-- Quick Stats -->
+                <section class="region-stats">
+                    <div class="stat-card large">
+                        <span class="stat-value" id="stat-price"></span>
+                        <span class="stat-label">Avg. Price/sqm</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-trend"></span>
+                        <span class="stat-label">YoY Change</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-days"></span>
+                        <span class="stat-label">Avg. Days on Market</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-expat"></span>
+                        <span class="stat-label">Expat Community</span>
+                    </div>
+                </section>
+
+                <!-- Description -->
+                <section class="region-section">
+                    <h2>Overview</h2>
+                    <p id="region-description" class="region-description"></p>
+                </section>
+
+                <!-- Highlights -->
+                <section class="region-section">
+                    <h2>Why Choose This Region</h2>
+                    <ul id="region-highlights" class="highlights-list"></ul>
+                </section>
+
+                <!-- Things to Consider -->
+                <section class="region-section considerations-section">
+                    <h2>Things to Consider</h2>
+                    <ul id="region-considerations" class="considerations-list"></ul>
+                </section>
+
+                <!-- Two Column Layout for Data -->
+                <div class="region-data-grid">
+                    <!-- Market Data -->
+                    <section class="region-section data-card">
+                        <h2>Market Data</h2>
+                        <div class="data-table">
+                            <div class="data-row">
+                                <span class="data-label">Average Price/sqm</span>
+                                <span class="data-value" id="market-price"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Year-over-Year Trend</span>
+                                <span class="data-value" id="market-trend"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Avg. Days on Market</span>
+                                <span class="data-value" id="market-days"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Active Listings</span>
+                                <span class="data-value" id="market-listings"></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Climate Data -->
+                    <section class="region-section data-card">
+                        <h2>Climate</h2>
+                        <div class="data-table">
+                            <div class="data-row">
+                                <span class="data-label">Climate Type</span>
+                                <span class="data-value" id="climate-type"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Summer Temperature</span>
+                                <span class="data-value" id="climate-summer"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Winter Temperature</span>
+                                <span class="data-value" id="climate-winter"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Annual Rainfall</span>
+                                <span class="data-value" id="climate-rain"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Sunshine Hours/Year</span>
+                                <span class="data-value" id="climate-sun"></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Lifestyle Data -->
+                    <section class="region-section data-card">
+                        <h2>Lifestyle & Expat Info</h2>
+                        <div class="data-table">
+                            <div class="data-row">
+                                <span class="data-label">Expat Community</span>
+                                <span class="data-value" id="life-expat"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Healthcare Rating</span>
+                                <span class="data-value" id="life-health"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">English Proficiency</span>
+                                <span class="data-value" id="life-english"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">International Schools</span>
+                                <span class="data-value" id="life-schools"></span>
+                            </div>
+                            <div class="data-row">
+                                <span class="data-label">Cost of Living Index</span>
+                                <span class="data-value" id="life-cost"></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Popular Areas -->
+                    <section class="region-section data-card">
+                        <h2>Popular Areas</h2>
+                        <ul id="popular-areas" class="popular-areas-list"></ul>
+                    </section>
+                </div>
+
+                <!-- Actions -->
+                <section class="region-actions">
+                    <a href="/regions" class="btn-secondary">Browse All Regions</a>
+                    <a href="/" class="btn-calculate" id="calculator-link">Calculate Purchase Costs</a>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Note:</strong> Data is illustrative and based on general trends.
+                Always verify with local sources before making decisions.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Tools</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get region ID from URL
+        const regionId = window.location.pathname.split('/').pop();
+    </script>
+    <script src="/static/region-detail.js"></script>
+</body>
+</html>

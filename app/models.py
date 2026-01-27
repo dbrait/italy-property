@@ -2,7 +2,7 @@
 Pydantic models for input validation and output structure.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 from typing import Optional, Literal
 from enum import Enum
 
@@ -122,3 +122,153 @@ class TaxRatesResponse(BaseModel):
     cadastral_tax: dict
     imu_rates: dict
     agency_commission: dict
+
+
+# =============================================================================
+# Property Listing Translator Models
+# =============================================================================
+
+
+class TranslateRequest(BaseModel):
+    """Request to translate a property listing URL."""
+    url: str = Field(..., description="URL of the property listing to translate")
+
+
+class PropertyListing(BaseModel):
+    """Translated property listing data."""
+    title: Optional[str] = None
+    price: Optional[float] = None
+    currency: str = "EUR"
+    size_sqm: Optional[float] = None
+    rooms: Optional[int] = None
+    bedrooms: Optional[int] = None
+    bathrooms: Optional[int] = None
+    location: Optional[str] = None
+    property_type: Optional[str] = None
+    description: Optional[str] = None
+    features: list[str] = []
+    images: list[str] = []
+    energy_class: Optional[str] = None
+    floor: Optional[str] = None
+    condition: Optional[str] = None
+
+
+class OriginalText(BaseModel):
+    """Original Italian text before translation."""
+    title: Optional[str] = None
+    description: Optional[str] = None
+    location: Optional[str] = None
+    property_type: Optional[str] = None
+    features: list[str] = []
+
+
+class TranslateResponse(BaseModel):
+    """Response containing translated listing data."""
+    success: bool
+    source: str
+    original_url: str
+    listing: PropertyListing
+    original_text: OriginalText
+    translation_available: bool = True
+
+
+class TranslateErrorResponse(BaseModel):
+    """Error response for translation failures."""
+    success: bool = False
+    error: str
+    error_type: str  # invalid_url, unsupported_site, fetch_error, parse_error
+
+
+class SupportedSite(BaseModel):
+    """Information about a supported property site."""
+    name: str
+    domain: str
+    description: str
+    example_url: str
+
+
+class SupportedSitesResponse(BaseModel):
+    """Response listing all supported property sites."""
+    sites: list[SupportedSite]
+
+
+# =============================================================================
+# Regional Dashboard Models
+# =============================================================================
+
+
+class RegionMarket(BaseModel):
+    """Market data for a region."""
+    avg_price_sqm: int
+    price_trend_yoy: float
+    avg_days_on_market: int
+    listings_count: int
+
+
+class RegionClimate(BaseModel):
+    """Climate data for a region."""
+    climate_type: str
+    avg_summer_temp_c: int
+    avg_winter_temp_c: int
+    annual_rainfall_mm: int
+    sunshine_hours_year: int
+
+
+class RegionLifestyle(BaseModel):
+    """Lifestyle and expat-relevant data for a region."""
+    expat_community_size: str
+    healthcare_rating: float
+    english_proficiency: str
+    international_schools: int
+    cost_of_living_index: int
+
+
+class Region(BaseModel):
+    """Full region data model."""
+    id: str
+    name_en: str
+    name_it: str
+    capital: str
+    capital_it: str
+    market: RegionMarket
+    climate: RegionClimate
+    lifestyle: RegionLifestyle
+    description: str
+    highlights: list[str]
+    popular_areas: list[str]
+    considerations: list[str]
+
+
+class RegionSummary(BaseModel):
+    """Summary data for region list/cards."""
+    id: str
+    name_en: str
+    name_it: str
+    capital: str
+    avg_price_sqm: int
+    price_trend_yoy: float
+    expat_community_size: str
+    climate_type: str
+
+
+class RegionRanking(BaseModel):
+    """Region ranking entry."""
+    id: str
+    name_en: str
+    avg_price_sqm: Optional[int] = None
+    price_trend_yoy: Optional[float] = None
+
+
+class MarketSummary(BaseModel):
+    """National market overview."""
+    national_avg_price_sqm: float
+    national_avg_trend_yoy: float
+    total_regions: int
+    cheapest_regions: list[RegionRanking]
+    most_expensive_regions: list[RegionRanking]
+    fastest_growing_regions: list[RegionRanking]
+
+
+class RegionCompareResponse(BaseModel):
+    """Response for region comparison endpoint."""
+    regions: list[Region]

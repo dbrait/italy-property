@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Regions - Italy Property Tools</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container compare-container">
+        <header>
+            <a href="/regions" class="back-link">&larr; Back to Dashboard</a>
+            <h1>Compare Regions</h1>
+            <p class="subtitle" id="compare-subtitle">Select 2-4 regions to compare</p>
+        </header>
+
+        <nav class="tool-nav">
+            <a href="/">Cost Calculator</a>
+            <a href="/translate">Listing Translator</a>
+            <a href="/regions" class="active">Regions</a>
+        </nav>
+
+        <main>
+            <!-- Region Selection -->
+            <section class="compare-selection" id="selection-section">
+                <div class="selection-row">
+                    <div class="selection-group">
+                        <label for="region-1">Region 1:</label>
+                        <select id="region-1" class="region-select">
+                            <option value="">Select a region...</option>
+                        </select>
+                    </div>
+                    <div class="selection-group">
+                        <label for="region-2">Region 2:</label>
+                        <select id="region-2" class="region-select">
+                            <option value="">Select a region...</option>
+                        </select>
+                    </div>
+                    <div class="selection-group">
+                        <label for="region-3">Region 3 (optional):</label>
+                        <select id="region-3" class="region-select">
+                            <option value="">Select a region...</option>
+                        </select>
+                    </div>
+                    <div class="selection-group">
+                        <label for="region-4">Region 4 (optional):</label>
+                        <select id="region-4" class="region-select">
+                            <option value="">Select a region...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="selection-actions">
+                    <button class="btn-calculate" id="compare-btn">Compare Regions</button>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <div class="loading" id="loading-indicator" style="display: none;">Loading comparison...</div>
+
+            <!-- Error Message -->
+            <div id="error-message" class="error-message" style="display: none;"></div>
+
+            <!-- Comparison Table -->
+            <section class="comparison-results" id="comparison-results" style="display: none;">
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table" id="comparison-table">
+                        <thead>
+                            <tr id="table-header">
+                                <th class="metric-column">Metric</th>
+                                <!-- Region columns added by JavaScript -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Rows added by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Legend -->
+                <div class="comparison-legend">
+                    <span class="legend-item"><span class="best-value-indicator"></span> Best value</span>
+                    <span class="legend-item"><span class="worst-value-indicator"></span> Consider carefully</span>
+                </div>
+
+                <!-- Region Details Links -->
+                <div class="comparison-actions" id="comparison-actions">
+                    <!-- Links added by JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Note:</strong> Comparisons are based on general regional data.
+                Actual conditions vary by specific location within each region.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Tools</p>
+        </footer>
+    </div>
+
+    <script src="/static/region-compare.js"></script>
+</body>
+</html>

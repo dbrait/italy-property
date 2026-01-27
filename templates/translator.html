@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian Property Listing Translator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Italian Property Listing Translator</h1>
+            <p class="subtitle">Paste a listing URL and get an English translation with structured data</p>
+        </header>
+
+        <nav class="tool-nav">
+            <a href="/">Cost Calculator</a>
+            <a href="/translate" class="active">Listing Translator</a>
+            <a href="/regions">Regions</a>
+        </nav>
+
+        <main>
+            <!-- URL Input Section -->
+            <section class="form-section">
+                <h2>Translate a Listing</h2>
+
+                <form id="translator-form">
+                    <div class="form-row">
+                        <div class="form-group url-input-group">
+                            <label for="listing_url">Property Listing URL</label>
+                            <input type="url" id="listing_url" name="listing_url"
+                                   placeholder="https://www.immobiliare.it/annunci/12345678/"
+                                   required>
+                            <span class="help-text">
+                                Supported sites:
+                                <span id="supported-sites-list">immobiliare.it, idealista.it</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-calculate" id="translate-btn">
+                            <span class="btn-text">Translate Listing</span>
+                            <span class="btn-loading" style="display: none;">Translating...</span>
+                        </button>
+                        <button type="button" class="btn-secondary" id="demo-btn">
+                            Try Demo
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Error Message -->
+            <div id="error-message" class="error-message" style="display: none;">
+                <strong>Error:</strong> <span id="error-text"></span>
+            </div>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section translator-results" style="display: none;">
+                <!-- Original Link Banner -->
+                <div class="original-link-banner">
+                    <span>Source:</span>
+                    <a id="original-url-link" href="#" target="_blank" rel="noopener noreferrer">
+                        View original listing on <span id="source-site"></span>
+                    </a>
+                </div>
+
+                <!-- Translation Notice -->
+                <div id="translation-notice" class="translation-notice" style="display: none;">
+                    <strong>Note:</strong> Translation service not configured.
+                    Showing original Italian text. Set the <code>DEEPL_API_KEY</code> environment variable to enable translations.
+                </div>
+
+                <!-- Property Header -->
+                <div class="listing-header">
+                    <h2 id="listing-title">Property Title</h2>
+                    <div class="listing-price-location">
+                        <span class="listing-price" id="listing-price"></span>
+                        <span class="listing-location" id="listing-location"></span>
+                    </div>
+                </div>
+
+                <!-- Image Gallery -->
+                <div id="image-gallery" class="image-gallery">
+                    <div class="gallery-main">
+                        <img id="main-image" src="" alt="Property image">
+                    </div>
+                    <div class="gallery-thumbnails" id="gallery-thumbnails">
+                        <!-- Thumbnails populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Key Details Grid -->
+                <div class="listing-details-grid">
+                    <div class="detail-card" id="detail-size">
+                        <span class="detail-label">Size</span>
+                        <span class="detail-value" id="detail-size-value">--</span>
+                    </div>
+                    <div class="detail-card" id="detail-rooms">
+                        <span class="detail-label">Rooms</span>
+                        <span class="detail-value" id="detail-rooms-value">--</span>
+                    </div>
+                    <div class="detail-card" id="detail-bedrooms">
+                        <span class="detail-label">Bedrooms</span>
+                        <span class="detail-value" id="detail-bedrooms-value">--</span>
+                    </div>
+                    <div class="detail-card" id="detail-bathrooms">
+                        <span class="detail-label">Bathrooms</span>
+                        <span class="detail-value" id="detail-bathrooms-value">--</span>
+                    </div>
+                    <div class="detail-card" id="detail-type">
+                        <span class="detail-label">Type</span>
+                        <span class="detail-value" id="detail-type-value">--</span>
+                    </div>
+                    <div class="detail-card" id="detail-energy">
+                        <span class="detail-label">Energy Class</span>
+                        <span class="detail-value" id="detail-energy-value">--</span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="listing-description">
+                    <h3>Description</h3>
+                    <div id="listing-description-text" class="description-text"></div>
+
+                    <details class="original-text-toggle">
+                        <summary>Show original Italian text</summary>
+                        <div id="original-description" class="original-text"></div>
+                    </details>
+                </div>
+
+                <!-- Features -->
+                <div id="features-section" class="listing-features" style="display: none;">
+                    <h3>Features</h3>
+                    <ul id="features-list" class="features-list"></ul>
+                </div>
+
+                <!-- Actions -->
+                <div class="listing-actions">
+                    <a id="view-original-btn" href="#" target="_blank" class="btn-secondary">
+                        View Original Listing
+                    </a>
+                    <a id="calculate-costs-btn" href="/" class="btn-calculate">
+                        Calculate Purchase Costs
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> This tool fetches and translates listings on-demand for personal use.
+                No listing data is stored. Always verify information on the original source.
+                Listings remain the property of their respective portals.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Tools</p>
+        </footer>
+    </div>
+
+    <script src="/static/translator.js"></script>
+</body>
+</html>

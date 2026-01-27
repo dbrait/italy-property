@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian Regional Dashboard - Property Research</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container regions-container">
+        <header>
+            <h1>Italian Regional Dashboard</h1>
+            <p class="subtitle">Explore property markets across Italy's 20 regions</p>
+        </header>
+
+        <nav class="tool-nav">
+            <a href="/">Cost Calculator</a>
+            <a href="/translate">Listing Translator</a>
+            <a href="/regions" class="active">Regions</a>
+        </nav>
+
+        <main class="regions-main">
+            <!-- Map and List Layout -->
+            <div class="regions-layout">
+                <!-- Interactive Map -->
+                <div class="map-container">
+                    <div class="map-header">
+                        <h2>Click a region to explore</h2>
+                        <div class="map-legend">
+                            <span class="legend-item"><span class="legend-color price-low"></span> Under 1,500/sqm</span>
+                            <span class="legend-item"><span class="legend-color price-mid"></span> 1,500-2,500/sqm</span>
+                            <span class="legend-item"><span class="legend-color price-high"></span> Over 2,500/sqm</span>
+                        </div>
+                    </div>
+                    <div class="italy-map" id="italy-map">
+                        <!-- SVG Map of Italy -->
+                        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" class="italy-svg">
+                            <!-- Valle d'Aosta -->
+                            <path class="region-path" data-region="valle_daosta" d="M95,95 L105,85 L120,88 L125,95 L120,105 L105,108 L95,100 Z" />
+                            <!-- Piemonte -->
+                            <path class="region-path" data-region="piemonte" d="M70,100 L95,95 L95,100 L105,108 L120,105 L130,115 L135,140 L125,165 L100,175 L75,165 L60,140 L65,115 Z" />
+                            <!-- Lombardia -->
+                            <path class="region-path" data-region="lombardia" d="M130,85 L165,80 L190,90 L200,110 L195,130 L175,145 L150,145 L135,140 L130,115 L120,105 L125,95 L120,88 Z" />
+                            <!-- Trentino-Alto Adige -->
+                            <path class="region-path" data-region="trentino_alto_adige" d="M190,50 L220,45 L240,55 L245,75 L235,95 L210,100 L190,90 L185,70 Z" />
+                            <!-- Veneto -->
+                            <path class="region-path" data-region="veneto" d="M210,100 L235,95 L260,105 L275,125 L265,145 L240,150 L220,145 L200,130 L195,115 Z" />
+                            <!-- Friuli Venezia Giulia -->
+                            <path class="region-path" data-region="friuli_venezia_giulia" d="M260,80 L290,75 L310,90 L305,115 L280,125 L260,115 L255,95 Z" />
+                            <!-- Liguria -->
+                            <path class="region-path" data-region="liguria" d="M60,165 L100,175 L130,180 L140,195 L120,210 L80,205 L50,190 L55,175 Z" />
+                            <!-- Emilia-Romagna -->
+                            <path class="region-path" data-region="emilia_romagna" d="M135,145 L175,145 L220,145 L265,155 L275,175 L250,195 L200,200 L150,195 L130,180 Z" />
+                            <!-- Toscana -->
+                            <path class="region-path" data-region="toscana" d="M130,195 L150,195 L200,200 L220,220 L215,255 L195,280 L160,285 L130,270 L115,240 L120,210 Z" />
+                            <!-- Marche -->
+                            <path class="region-path" data-region="marche" d="M220,220 L255,210 L280,235 L275,270 L250,285 L220,275 L215,255 Z" />
+                            <!-- Umbria -->
+                            <path class="region-path" data-region="umbria" d="M195,255 L215,255 L220,275 L210,295 L185,300 L175,285 Z" />
+                            <!-- Lazio -->
+                            <path class="region-path" data-region="lazio" d="M160,285 L195,280 L210,295 L220,320 L210,355 L180,365 L150,350 L140,320 L145,295 Z" />
+                            <!-- Abruzzo -->
+                            <path class="region-path" data-region="abruzzo" d="M220,275 L250,285 L265,310 L255,340 L225,345 L210,325 L220,295 Z" />
+                            <!-- Molise -->
+                            <path class="region-path" data-region="molise" d="M225,345 L255,340 L270,360 L260,380 L235,375 L225,355 Z" />
+                            <!-- Campania -->
+                            <path class="region-path" data-region="campania" d="M180,365 L210,355 L225,375 L240,400 L225,430 L195,435 L170,415 L165,390 Z" />
+                            <!-- Puglia -->
+                            <path class="region-path" data-region="puglia" d="M260,340 L295,330 L330,350 L345,390 L330,430 L295,445 L265,430 L250,400 L260,370 Z" />
+                            <!-- Basilicata -->
+                            <path class="region-path" data-region="basilicata" d="M225,400 L250,400 L265,430 L250,455 L220,450 L210,430 Z" />
+                            <!-- Calabria -->
+                            <path class="region-path" data-region="calabria" d="M250,455 L275,460 L285,490 L270,520 L245,530 L230,510 L235,480 Z" />
+                            <!-- Sicilia -->
+                            <path class="region-path" data-region="sicilia" d="M150,490 L190,480 L230,485 L240,510 L220,540 L175,550 L135,535 L120,510 L135,495 Z" />
+                            <!-- Sardegna -->
+                            <path class="region-path" data-region="sardegna" d="M50,290 L75,280 L95,295 L100,340 L90,390 L70,410 L45,400 L35,360 L40,310 Z" />
+                        </svg>
+                        <!-- Tooltip -->
+                        <div class="map-tooltip" id="map-tooltip">
+                            <div class="tooltip-name"></div>
+                            <div class="tooltip-price"></div>
+                            <div class="tooltip-trend"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Region List Panel -->
+                <div class="regions-panel">
+                    <!-- Filters -->
+                    <div class="regions-filters">
+                        <div class="filter-group">
+                            <label for="sort-by">Sort by:</label>
+                            <select id="sort-by">
+                                <option value="name">Name (A-Z)</option>
+                                <option value="price-low">Price (Low to High)</option>
+                                <option value="price-high">Price (High to Low)</option>
+                                <option value="trend">Growth Rate</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-expat">Expat Community:</label>
+                            <select id="filter-expat">
+                                <option value="all">All</option>
+                                <option value="large">Large</option>
+                                <option value="medium">Medium</option>
+                                <option value="small">Small</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-climate">Climate:</label>
+                            <select id="filter-climate">
+                                <option value="all">All</option>
+                                <option value="Mediterranean">Mediterranean</option>
+                                <option value="Continental">Continental</option>
+                                <option value="Alpine">Alpine</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Selected regions for comparison -->
+                    <div class="compare-bar" id="compare-bar" style="display: none;">
+                        <span class="compare-count"><span id="compare-count">0</span> regions selected</span>
+                        <button class="btn-compare" id="compare-btn" disabled>Compare Selected</button>
+                        <button class="btn-clear-compare" id="clear-compare-btn">Clear</button>
+                    </div>
+
+                    <!-- Region Cards -->
+                    <div class="region-cards" id="region-cards">
+                        <!-- Cards populated by JavaScript -->
+                        <div class="loading" id="loading-indicator">Loading regions...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Summary -->
+            <section class="market-summary" id="market-summary" style="display: none;">
+                <h2>National Market Overview</h2>
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <span class="stat-value" id="avg-price">-</span>
+                        <span class="stat-label">Avg. Price/sqm</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="avg-trend">-</span>
+                        <span class="stat-label">Avg. YoY Trend</span>
+                    </div>
+                </div>
+                <div class="rankings-grid">
+                    <div class="ranking-card">
+                        <h3>Most Affordable</h3>
+                        <ol id="cheapest-list"></ol>
+                    </div>
+                    <div class="ranking-card">
+                        <h3>Most Expensive</h3>
+                        <ol id="expensive-list"></ol>
+                    </div>
+                    <div class="ranking-card">
+                        <h3>Fastest Growing</h3>
+                        <ol id="growing-list"></ol>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Note:</strong> Property prices are illustrative estimates based on general market trends.
+                Actual prices vary significantly by location, property type, and condition.
+                Consult local agencies and official sources (OMI) for current data.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Tools</p>
+        </footer>
+    </div>
+
+    <script src="/static/regions.js"></script>
+</body>
+</html>
