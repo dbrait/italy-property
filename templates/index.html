@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italy Property Cost Calculator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Italy Property Cost Calculator</h1>
+            <p class="subtitle">Calculate the true total cost of purchasing property in Italy</p>
+        </header>
+
+        <main>
+            <form id="calculator-form">
+                <!-- Property Details Section -->
+                <section class="form-section">
+                    <h2>Property Details</h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="purchase_price">Purchase Price (EUR) *</label>
+                            <input type="number" id="purchase_price" name="purchase_price"
+                                   min="1" step="1000" required placeholder="e.g., 250000">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="source_currency">Your Currency</label>
+                            <select id="source_currency" name="source_currency">
+                                <option value="EUR">EUR (Euro)</option>
+                                <option value="USD">USD (US Dollar)</option>
+                                <option value="CAD">CAD (Canadian Dollar)</option>
+                                <option value="GBP">GBP (British Pound)</option>
+                                <option value="AUD">AUD (Australian Dollar)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="property_type">Property Type</label>
+                            <select id="property_type" name="property_type">
+                                <option value="residential">Residential</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="agricultural">Agricultural</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="seller_type">Buying From</label>
+                            <select id="seller_type" name="seller_type">
+                                <option value="private">Private Seller</option>
+                                <option value="developer">Developer/Company</option>
+                            </select>
+                            <span class="help-text">VAT applies when buying from a developer</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cadastral_category">Cadastral Category</label>
+                            <select id="cadastral_category" name="cadastral_category">
+                                <option value="">Unknown / Not sure</option>
+                                <option value="A/1">A/1 - Luxury residence</option>
+                                <option value="A/2">A/2 - Standard residence</option>
+                                <option value="A/3">A/3 - Economy residence</option>
+                                <option value="A/4">A/4 - Popular residence</option>
+                                <option value="A/5">A/5 - Very basic residence</option>
+                                <option value="A/6">A/6 - Rural residence</option>
+                                <option value="A/7">A/7 - Small villa</option>
+                                <option value="A/8">A/8 - Luxury villa</option>
+                                <option value="A/9">A/9 - Historic castle/palace</option>
+                                <option value="A/10">A/10 - Office</option>
+                                <option value="A/11">A/11 - Typical dwelling</option>
+                            </select>
+                            <span class="help-text">A/1, A/8, A/9 are luxury categories with higher taxes</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cadastral_income">Cadastral Income (EUR/year)</label>
+                            <input type="number" id="cadastral_income" name="cadastral_income"
+                                   min="0" step="10" placeholder="Leave blank to estimate">
+                            <span class="help-text">Found on property documents (rendita catastale)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="property_size_sqm">Property Size (sqm)</label>
+                            <input type="number" id="property_size_sqm" name="property_size_sqm"
+                                   min="1" step="1" placeholder="e.g., 100">
+                            <span class="help-text">Used for TARI and utility estimates</span>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="is_apartment" name="is_apartment">
+                                Apartment with condominium fees
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row condo-fee-row" style="display: none;">
+                        <div class="form-group">
+                            <label for="monthly_condo_fee">Monthly Condominium Fee (EUR)</label>
+                            <input type="number" id="monthly_condo_fee" name="monthly_condo_fee"
+                                   min="0" step="10" placeholder="Leave blank to estimate">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Buyer Details Section -->
+                <section class="form-section">
+                    <h2>Buyer Details</h2>
+
+                    <div class="form-row">
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="prima_casa" name="prima_casa">
+                                Prima Casa (First Home) Eligibility
+                            </label>
+                            <span class="help-text">Lower taxes if this will be your main residence in Italy</span>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="resident_in_italy" name="resident_in_italy">
+                                Resident in Italy
+                            </label>
+                            <span class="help-text">Or planning to establish residency within 18 months</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="using_mortgage" name="using_mortgage">
+                                Using a Mortgage
+                            </label>
+                        </div>
+
+                        <div class="form-group mortgage-amount-group" style="display: none;">
+                            <label for="mortgage_amount">Mortgage Amount (EUR)</label>
+                            <input type="number" id="mortgage_amount" name="mortgage_amount"
+                                   min="0" step="1000" placeholder="Leave blank for 70% estimate">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Additional Costs Section -->
+                <section class="form-section">
+                    <h2>Additional Options</h2>
+
+                    <div class="form-row">
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="include_agency_fee" name="include_agency_fee" checked>
+                                Include Agency Commission
+                            </label>
+                        </div>
+
+                        <div class="form-group agency-rate-group">
+                            <label for="agency_rate">Agency Rate (%)</label>
+                            <input type="number" id="agency_rate" name="agency_rate"
+                                   min="0" max="10" step="0.5" value="3" placeholder="3">
+                            <span class="help-text">Typical: 3% (+ 22% VAT)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="include_geometra" name="include_geometra" checked>
+                                Include Geometra (Surveyor) Fee
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="include_translator" name="include_translator">
+                                Include Translator Fee
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="renovation_budget">Renovation Budget (EUR)</label>
+                            <input type="number" id="renovation_budget" name="renovation_budget"
+                                   min="0" step="1000" placeholder="Optional">
+                        </div>
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-calculate">Calculate Total Costs</button>
+                    <button type="reset" class="btn-reset">Reset Form</button>
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section" style="display: none;">
+                <h2>Cost Breakdown</h2>
+
+                <div id="results-content">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Exchange Rate Info -->
+            <div id="exchange-rate-info" class="exchange-rate-info">
+                <span id="rate-display">Loading exchange rates...</span>
+            </div>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> This calculator provides estimates only.
+                Actual costs may vary based on specific circumstances, location, and current regulations.
+                Always consult a qualified notary (<em>notaio</em>) or accountant (<em>commercialista</em>)
+                for accurate figures before purchasing property in Italy.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Cost Calculator</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
