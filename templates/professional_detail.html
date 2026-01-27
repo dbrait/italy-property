@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Profile - Italy Property Tools</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="professional-header" id="professional-header">
+            <a href="/professionals" class="back-link">&larr; Back to Directory</a>
+            <div class="header-badges" id="header-badges"></div>
+            <h1 id="professional-name">Loading...</h1>
+            <p class="subtitle" id="professional-category"></p>
+        </header>
+
+        <nav class="tool-nav">
+            <a href="/">Cost Calculator</a>
+            <a href="/translate">Listing Translator</a>
+            <a href="/regions">Regions</a>
+            <a href="/professionals" class="active">Professionals</a>
+        </nav>
+
+        <main id="professional-content">
+            <div class="loading" id="loading-indicator">Loading professional details...</div>
+
+            <div id="professional-details" style="display: none;">
+                <!-- Quick Info -->
+                <section class="professional-quick-info">
+                    <div class="info-card" id="info-regions">
+                        <span class="info-label">Regions Covered</span>
+                        <span class="info-value" id="regions-value"></span>
+                    </div>
+                    <div class="info-card" id="info-languages">
+                        <span class="info-label">Languages</span>
+                        <span class="info-value" id="languages-value"></span>
+                    </div>
+                    <div class="info-card" id="info-contact">
+                        <span class="info-label">Contact</span>
+                        <span class="info-value" id="contact-value"></span>
+                    </div>
+                </section>
+
+                <!-- Description -->
+                <section class="professional-section">
+                    <h2>About</h2>
+                    <p id="professional-description" class="professional-description"></p>
+                </section>
+
+                <!-- Services -->
+                <section class="professional-section">
+                    <h2>Services Offered</h2>
+                    <ul id="professional-services" class="services-list"></ul>
+                </section>
+
+                <!-- Highlights -->
+                <section class="professional-section highlights-section">
+                    <h2>Why Choose This Professional</h2>
+                    <ul id="professional-highlights" class="highlights-list"></ul>
+                </section>
+
+                <!-- Contact & Website -->
+                <section class="professional-section contact-section">
+                    <h2>Contact Information</h2>
+                    <div class="contact-details" id="contact-details">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Category Info -->
+                <section class="professional-section category-section">
+                    <h2 id="category-section-title">About This Type of Professional</h2>
+                    <p id="category-description"></p>
+                    <div class="category-meta">
+                        <div class="meta-item">
+                            <strong>Why you need one:</strong>
+                            <p id="category-why"></p>
+                        </div>
+                        <div class="meta-item">
+                            <strong>Typical fees:</strong>
+                            <p id="category-fees"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Actions -->
+                <section class="professional-actions">
+                    <a href="/professionals" class="btn-secondary">Browse All Professionals</a>
+                    <a href="#" class="btn-calculate" id="website-btn" target="_blank" style="display: none;">
+                        Visit Website
+                    </a>
+                </section>
+
+                <!-- Verification Notice -->
+                <section class="verification-notice">
+                    <p>
+                        <strong>Important:</strong> Always verify professional credentials independently.
+                        Check registration with relevant professional bodies (Bar Association for lawyers,
+                        Consiglio Nazionale del Notariato for notaries, etc.) before engaging services.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> This listing is for informational purposes only.
+                We do not guarantee the quality, availability, or credentials of listed professionals.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Tools</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get professional ID from URL
+        const professionalId = window.location.pathname.split('/').pop();
+    </script>
+    <script src="/static/professional-detail.js"></script>
+</body>
+</html>

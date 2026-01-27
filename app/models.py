@@ -272,3 +272,56 @@ class MarketSummary(BaseModel):
 class RegionCompareResponse(BaseModel):
     """Response for region comparison endpoint."""
     regions: list[Region]
+
+
+# =============================================================================
+# Professional Finder Models
+# =============================================================================
+
+
+class ProfessionalCategory(BaseModel):
+    """Professional category information."""
+    id: str
+    name_en: str
+    name_it: str
+    plural_en: str
+    plural_it: str
+    description: str
+    why_needed: str
+    typical_fees: str
+    icon: str
+
+
+class Professional(BaseModel):
+    """Professional listing."""
+    id: str
+    category: str
+    name: str
+    contact_person: Optional[str] = None
+    regions: list[str]
+    cities: list[str]
+    languages: list[str]
+    website: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    description: str
+    services: list[str]
+    highlights: list[str]
+    verified: bool = False
+    featured: bool = False
+    source: Optional[str] = None
+
+
+class ProfessionalSearchParams(BaseModel):
+    """Search parameters for professionals."""
+    category: Optional[str] = None
+    region: Optional[str] = None
+    featured_only: bool = False
+    verified_only: bool = False
+
+
+class ProfessionalSearchResponse(BaseModel):
+    """Response for professional search."""
+    professionals: list[Professional]
+    total: int
+    filters_applied: dict

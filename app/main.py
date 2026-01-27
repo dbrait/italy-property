@@ -14,6 +14,7 @@ from app.models import (
     TranslateRequest, TranslateResponse, TranslateErrorResponse,
     PropertyListing, OriginalText, SupportedSitesResponse, SupportedSite,
     Region, RegionSummary, MarketSummary, RegionCompareResponse,
+    Professional, ProfessionalCategory, ProfessionalSearchResponse,
 )
 from app.calculator import calculate_total
 from app.currency import fetch_exchange_rates, get_rate_info
@@ -33,6 +34,10 @@ from app.translator import get_translator
 from app.data.regions import (
     get_all_regions, get_region_by_id, get_regions_by_ids,
     get_region_summaries, get_market_summary,
+)
+from app.data.professionals import (
+    get_all_categories, get_category, get_all_professionals,
+    get_professional_by_id, search_professionals, get_regions_with_professionals,
 )
 
 
@@ -380,3 +385,94 @@ async def api_get_region(region_id: str):
     if not region:
         raise HTTPException(status_code=404, detail="Region not found")
     return Region(**region)
+
+
+# =============================================================================
+# Professional Finder Endpoints
+# =============================================================================
+
+
+@app.get("/professionals", response_class=HTMLResponse)
+async def professionals_page(request: Request):
+    """Render the professional finder page."""
+    return templates.TemplateResponse("professionals.html", {"request": request})
+
+
+@app.get("/professionals/{professional_id}", response_class=HTMLResponse)
+async def professional_detail_page(request: Request, professional_id: str):
+    """Render a single professional detail page."""
+    professional = get_professional_by_id(professional_id)
+    if not professional:
+        raise HTTPException(status_code=404, detail="Professional not found")
+    return templates.TemplateResponse("professional_detail.html", {
+        "request": request,
+        "professional_id": professional_id
+    })
+
+
+@app.get("/api/professionals/categories", response_model=list[ProfessionalCategory])
+async def api_list_categories():
+    """
+    Get all professional categories with descriptions.
+
+    Returns category info including why each type is needed and typical fees.
+    """
+    return [ProfessionalCategory(**c) for c in get_all_categories()]
+
+
+@app.get("/api/professionals/regions")
+async def api_professionals_regions():
+    """
+    Get list of regions that have professionals listed.
+
+    Useful for populating filter dropdowns.
+    """
+    return {"regions": get_regions_with_professionals()}
+
+
+@app.get("/api/professionals", response_model=ProfessionalSearchResponse)
+async def api_search_professionals(
+    category: str = None,
+    region: str = None,
+    featured: bool = False,
+    verified: bool = False,
+):
+    """
+    Search professionals with optional filters.
+
+    Filters:
+    - category: Filter by category ID (lawyer, notary, geometra, etc.)
+    - region: Filter by region ID (toscana, umbria, etc.)
+    - featured: Only show featured professionals
+    - verified: Only show verified professionals
+    """
+    results = search_professionals(
+        category=category,
+        region=region,
+        featured_only=featured,
+        verified_only=verified,
+    )
+
+    return ProfessionalSearchResponse(
+        professionals=[Professional(**p) for p in results],
+        total=len(results),
+        filters_applied={
+            "category": category,
+            "region": region,
+            "featured": featured,
+            "verified": verified,
+        }
+    )
+
+
+@app.get("/api/professionals/{professional_id}", response_model=Professional)
+async def api_get_professional(professional_id: str):
+    """
+    Get full details for a single professional.
+
+    Returns complete profile including services, highlights, and contact info.
+    """
+    professional = get_professional_by_id(professional_id)
+    if not professional:
+        raise HTTPException(status_code=404, detail="Professional not found")
+    return Professional(**professional)

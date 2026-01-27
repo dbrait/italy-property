@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find English-Speaking Professionals in Italy</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container professionals-container">
+        <header>
+            <h1>Professional Finder</h1>
+            <p class="subtitle">English-speaking lawyers, notaries, accountants & more for foreign property buyers</p>
+        </header>
+
+        <nav class="tool-nav">
+            <a href="/">Cost Calculator</a>
+            <a href="/translate">Listing Translator</a>
+            <a href="/regions">Regions</a>
+            <a href="/professionals" class="active">Professionals</a>
+        </nav>
+
+        <main>
+            <!-- Category Quick Links -->
+            <section class="category-links" id="category-links">
+                <div class="loading">Loading categories...</div>
+            </section>
+
+            <!-- Filters -->
+            <section class="professionals-filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="filter-category">Category:</label>
+                        <select id="filter-category">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-region">Region:</label>
+                        <select id="filter-region">
+                            <option value="">All Regions</option>
+                        </select>
+                    </div>
+                    <div class="filter-group filter-checkboxes">
+                        <label>
+                            <input type="checkbox" id="filter-verified">
+                            Verified only
+                        </label>
+                        <label>
+                            <input type="checkbox" id="filter-featured">
+                            Featured only
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-results">
+                    <span id="results-count">Loading...</span>
+                    <button class="btn-clear-filters" id="clear-filters" style="display: none;">Clear Filters</button>
+                </div>
+            </section>
+
+            <!-- Results -->
+            <section class="professionals-results">
+                <div class="loading" id="loading-indicator">Loading professionals...</div>
+                <div class="professionals-grid" id="professionals-grid">
+                    <!-- Cards populated by JavaScript -->
+                </div>
+                <div class="no-results" id="no-results" style="display: none;">
+                    <p>No professionals found matching your filters.</p>
+                    <p>Try broadening your search or <button class="btn-link" id="clear-filters-link">clearing all filters</button>.</p>
+                </div>
+            </section>
+
+            <!-- Category Info Section -->
+            <section class="category-info" id="category-info" style="display: none;">
+                <h2 id="category-info-title">About This Category</h2>
+                <div class="category-info-content">
+                    <p id="category-info-description"></p>
+                    <div class="category-info-details">
+                        <div class="info-item">
+                            <strong>Why you need one:</strong>
+                            <p id="category-info-why"></p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Typical fees:</strong>
+                            <p id="category-info-fees"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Disclaimer -->
+            <section class="professionals-disclaimer">
+                <h3>About This Directory</h3>
+                <p>
+                    This directory lists English-speaking professionals who work with foreign property buyers in Italy.
+                    Listings are compiled from publicly available sources and user recommendations.
+                </p>
+                <ul>
+                    <li><strong>Verified</strong> professionals have been confirmed through official registries or direct contact</li>
+                    <li><strong>Featured</strong> professionals are well-established with strong track records serving foreign clients</li>
+                    <li>Always verify credentials independently and get multiple quotes before engaging services</li>
+                    <li>This directory does not constitute an endorsement or recommendation</li>
+                </ul>
+                <p class="suggest-link">
+                    Know an English-speaking professional we should add?
+                    <a href="mailto:suggest@example.com">Suggest a listing</a>
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> This directory is for informational purposes only.
+                Always verify professional credentials and qualifications before engaging services.
+                We do not guarantee the quality or availability of any listed professional.
+            </div>
+            <p class="copyright">&copy; 2026 Italy Property Tools</p>
+        </footer>
+    </div>
+
+    <script src="/static/professionals.js"></script>
+</body>
+</html>
