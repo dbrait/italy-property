@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { desc } from 'drizzle-orm'
 import { db, removal_requests } from '@/lib/db'
 
 const removalSchema = z.object({
@@ -43,5 +44,18 @@ export async function POST(request: NextRequest) {
       { error: 'An unexpected error occurred' },
       { status: 500 }
     )
+  }
+}
+
+export async function GET() {
+  try {
+    const data = await db
+      .select()
+      .from(removal_requests)
+      .orderBy(desc(removal_requests.created_at))
+    return NextResponse.json({ count: data.length, data })
+  } catch (error) {
+    console.error('Error fetching removal requests:', error)
+    return NextResponse.json({ error: String(error) }, { status: 500 })
   }
 }

@@ -1,23 +1,30 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
-import { Mail, Phone, Calendar, ExternalLink, AlertTriangle } from 'lucide-react'
-import { db, removal_requests } from '@/lib/db'
-import { desc } from 'drizzle-orm'
+import { Mail, Phone, Calendar, AlertTriangle } from 'lucide-react'
+import { neon } from '@neondatabase/serverless'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { formatDate } from '@/lib/utils'
+import { RemovalRequest } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'Removal Requests | Admin',
 }
 
-async function getRemovalRequests() {
-  const data = await db
-    .select()
-    .from(removal_requests)
-    .orderBy(desc(removal_requests.created_at))
-  return data
+export const dynamic = 'force-dynamic'
+
+async function getRemovalRequests(): Promise<RemovalRequest[]> {
+  try {
+    const sql = neon(process.env.DATABASE_URL!)
+    const data = await sql`
+      SELECT * FROM removal_requests
+      ORDER BY created_at DESC
+    `
+    return data as RemovalRequest[]
+  } catch (error) {
+    console.error('Error in getRemovalRequests:', error)
+    return []
+  }
 }
 
 const statusColors: Record<string, 'default' | 'secondary' | 'success' | 'destructive'> = {
