@@ -119,14 +119,14 @@ export function FilterSidebar({ categories, className }: FilterSidebarProps) {
       <div className="space-y-3">
         <Label>Category</Label>
         <Select
-          value={selectedCategory}
-          onValueChange={(value) => updateParams('category', value || null)}
+          value={selectedCategory || 'all'}
+          onValueChange={(value) => updateParams('category', value === 'all' ? null : value)}
         >
           <SelectTrigger>
             <SelectValue placeholder="All categories" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All categories</SelectItem>
+            <SelectItem value="all">All categories</SelectItem>
             {categories.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>
                 {cat.plural_en}
