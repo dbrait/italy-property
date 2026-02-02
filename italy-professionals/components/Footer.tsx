@@ -25,6 +25,7 @@ const footerLinks = {
     { name: 'Contact', href: '/contact' },
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
+    { name: 'Request Removal', href: '/removal-request' },
   ],
 }
 

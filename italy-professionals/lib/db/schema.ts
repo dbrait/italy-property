@@ -106,6 +106,22 @@ export const admin_users = pgTable('admin_users', {
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
 })
 
+// ============================================================================
+// REMOVAL REQUESTS TABLE
+// ============================================================================
+export const removal_requests = pgTable('removal_requests', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  business_name: text('business_name').notNull(),
+  contact_name: text('contact_name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone'),
+  listing_url: text('listing_url'),
+  reason: text('reason').notNull(),
+  status: text('status').default('pending'),
+  admin_notes: text('admin_notes'),
+  created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
+})
+
 // Type exports for use in the application
 export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert
@@ -121,3 +137,6 @@ export type NewReview = typeof reviews.$inferInsert
 
 export type AdminUser = typeof admin_users.$inferSelect
 export type NewAdminUser = typeof admin_users.$inferInsert
+
+export type RemovalRequest = typeof removal_requests.$inferSelect
+export type NewRemovalRequest = typeof removal_requests.$inferInsert

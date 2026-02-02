@@ -6,6 +6,7 @@ import {
   Star,
   Settings,
   LogOut,
+  UserX,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -14,6 +15,7 @@ const navigation = [
   { name: 'Professionals', href: '/admin/professionals', icon: Users },
   { name: 'Leads', href: '/admin/leads', icon: MessageSquare },
   { name: 'Reviews', href: '/admin/reviews', icon: Star },
+  { name: 'Removal Requests', href: '/admin/removal-requests', icon: UserX },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
 ]
 
